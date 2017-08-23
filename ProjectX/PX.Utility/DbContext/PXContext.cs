@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Reflection;
 using PX.Domain.DAC;
 
-namespace ProjectX.DbContext
+namespace PX.Utility.DbContext
 {
     public class PXContext : System.Data.Entity.DbContext
     {
