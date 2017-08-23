@@ -76,12 +76,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDAL\IBaseRepository.cs" />
+    <Compile Include="IDAL\ISysUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PX.Domain\PX.Domain.csproj">
+      <Project>{9D355CAB-30A4-4732-90B7-9BD3AC58EF32}</Project>
+      <Name>PX.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

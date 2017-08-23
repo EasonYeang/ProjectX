@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\BaseService.cs" />
+    <Compile Include="BLL\SysUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +85,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\PX.Domain\PX.Domain.csproj">
+      <Project>{9D355CAB-30A4-4732-90B7-9BD3AC58EF32}</Project>
+      <Name>PX.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PX.IRepository\PX.IRepository.csproj">
+      <Project>{7E7C4F69-0040-4C98-BF0E-1720C822A169}</Project>
+      <Name>PX.IRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PX.IService\PX.IService.csproj">
       <Project>{8D2B574C-D7B7-42A9-A2F7-DB6947BEA3D5}</Project>
       <Name>PX.IService</Name>
