@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbContext\DbContextFactory.cs" />
     <Compile Include="DbContext\PXContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

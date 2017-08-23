@@ -17,6 +17,9 @@ namespace ProjectX
 
             //...bundles
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //...Autofac
+            AutofacConfig.Register();
         }
     }
 }
