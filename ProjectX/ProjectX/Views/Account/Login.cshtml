@@ -6,6 +6,8 @@
     <title>系统登录</title>
     @Scripts.Render("~/Content/js")
     @Styles.Render("~/Content/css")
+    <script src="~/layui/layui.js"></script>
+    <link href="~/layui/css/layui.css" rel="stylesheet" />
 </head>
 <body>
     <div>
@@ -127,6 +129,12 @@
 </style>
 <script type="text/javascript">
 
+    var layer = null;
+
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
     //生成唯一的GUID
     function getGuid() {
         var s4 = function () {
@@ -156,12 +164,11 @@
             $.ajax({
                 type: 'Post',
                 url: '/Account/Login',
-                headers: headers,
                 cache: false,
                 data: AddAntiForgeryToken({ UserName: userName, Password: password, ValidateCode: validateCode }),
                 dataType: 'Json',
                 success: function (data) {
-                    //...
+                    layer.alert(data);
                 }
             });
         });

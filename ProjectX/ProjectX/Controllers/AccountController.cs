@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using AutoMapper;
 using PX.Domain.DAC;
 using PX.IService.IBLL;
 using PX.Model.ViewModel;
@@ -44,13 +45,22 @@ namespace ProjectX.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Login(SysUserViewModel user)
+        public JsonResult Login(SysUserViewModel userView)
         {
-            if (user!=null)
+            string msg = null;
+            if (userView != null)
             {
-                
+                try
+                {
+                    SysUser user = Mapper.Map<SysUserViewModel, SysUser>(userView);
+                }
+                catch (Exception ex)
+                {
+                    
+                    throw new Exception(ex.Message);
+                }
             }
-            return Json('1');
+            return Json(1);
         }
 
         /// <summary>
