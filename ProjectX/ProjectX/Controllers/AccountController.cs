@@ -43,24 +43,53 @@ namespace ProjectX.Controllers
             return View();
         }
 
+        /// <summary>
+        /// User login
+        /// </summary>
+        /// <param name="userView">login information</param>
+        /// <returns>login message</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult Login(SysUserViewModel userView)
         {
             string msg = null;
+            bool loginState = false;
             if (userView != null)
             {
-                try
+                if (string.IsNullOrEmpty(userView.ValidateCode) ||
+                    Session["ValidateCode"].ToString().ToLower() != userView.ValidateCode.ToLower())
                 {
-                    SysUser user = Mapper.Map<SysUserViewModel, SysUser>(userView);
+                    msg = "ValidateCode Wrong.";
                 }
-                catch (Exception ex)
+                else
                 {
-                    
-                    throw new Exception(ex.Message);
+                    SysUser user = _sysUserService.GetList().FirstOrDefault(d => d.UserName == userView.UserName);
+                    if (user == null)
+                    {
+                        msg = "UseName Wrong.";
+                    }
+                    else
+                    {
+                        if (user.Password != userView.Password)
+                        {
+                            msg = "Password Wrong.";
+                        }
+                        else
+                        {
+                            loginState = true;
+                            //...
+                        }
+                    }
                 }
             }
-            return Json(1);
+
+            var result = new
+            {
+                State = loginState,
+                Message = msg
+            };
+
+            return Json(result);
         }
 
         /// <summary>

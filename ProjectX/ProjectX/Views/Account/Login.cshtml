@@ -56,10 +56,10 @@
                             <td>
                                 <div id="mes" style="height: 38px; display: none">
                                     <p style="color: red; height: 100%; padding-top: 8px">
-                                        <i class="fa fa-exclamation fa-lg" aria-hidden="true"></i>&nbsp;xxx
+                                    <i class="fa fa-exclamation fa-lg" aria-hidden="true"></i>&nbsp;<span id="errorMsg"></span>
                                     </p>
                                 </div>
-                                <div id="Loading" style="display: none; position: relative; height: 38px;">
+                                <div id="loading" style="display: none; position: relative; height: 38px;">
                                     <p style="color: green; height: 100%; padding-top: 8px">
                                         <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>&nbsp;加载中...
                                     </p>
@@ -168,7 +168,17 @@
                 data: AddAntiForgeryToken({ UserName: userName, Password: password, ValidateCode: validateCode }),
                 dataType: 'Json',
                 success: function (data) {
-                    layer.alert(data);
+                    if (data != null) {
+                        if (!data.State) {
+                            $('#errorMsg').text(data.Message);
+                            $('#loading').hide();
+                            $('#mes').show();
+                            refreshCode();
+                        } else {
+                            $('#mes').hide();
+                            $('#loading').show();
+                        }
+                    }
                 }
             });
         });
