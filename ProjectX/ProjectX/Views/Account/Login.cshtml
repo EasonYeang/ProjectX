@@ -8,6 +8,9 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
+    <div>
+        @Html.AntiForgeryToken()
+    </div>
     <div id="FormArea">
         <table id="LoginTb" style="margin-top: 10px; background: #fff; width: 100%; height: 230px; border: 1px #ccc solid;">
             <tr>
@@ -32,30 +35,37 @@
                     <input id="Password" name="Password" type="password" />
                 </td>
             </tr>
-
             <tr>
                 <td style="width: 80px; text-align: right">
                     验证码：
                 </td>
-                <td></td>
+                <td id="td-codeImg">
+                    <input style="width: 50px" type="text" name="ValidateCode" id="ValidateCode" />
+                    <img id="codeImg" alt="刷新验证码！" style="cursor: pointer;" src="/Account/GetValidateCode" onclick='refreshCode()' />
+                    <a href="javascript:void(0)" style="color: blue" onclick="refreshCode()">看不清？</a>
+                </td>
             </tr>
 
             <tr>
                 <td colspan="2">
                     <table style="width: 100%;">
-                        <tr>
+                        <tr id="loadingMsg">
                             <td style="width: 40px;">&nbsp;</td>
                             <td>
-                                <div id="mes" style="height: 38px;display: none">
-                                    <p style="color: red; height: 100%;padding-top: 8px"><i class="fa fa-exclamation fa-lg" aria-hidden="true"></i>&nbsp;xxx</p>
+                                <div id="mes" style="height: 38px; display: none">
+                                    <p style="color: red; height: 100%; padding-top: 8px">
+                                        <i class="fa fa-exclamation fa-lg" aria-hidden="true"></i>&nbsp;xxx
+                                    </p>
                                 </div>
                                 <div id="Loading" style="display: none; position: relative; height: 38px;">
-                                    <p style="color: green; height: 100%; padding-top: 8px"><i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>&nbsp;加载中...</p>
+                                    <p style="color: green; height: 100%; padding-top: 8px">
+                                        <i class="fa fa-spinner fa-pulse fa-lg fa-fw"></i>&nbsp;加载中...
+                                    </p>
 
                                 </div>
                             </td>
                             <td style="width: 100px;">
-                                <button type="button" id="sign-in" class="layui-btn layui-btn-primary layui-btn-small"><i class="fa fa-check fa-lg" aria-hidden="true"></i>&nbsp;登录</button>
+                                <button type="submit" id="signIn" class="layui-btn layui-btn-primary layui-btn-small"><i class="fa fa-check fa-lg" aria-hidden="true"></i>&nbsp;登录</button>
                             </td>
                         </tr>
 
@@ -66,7 +76,7 @@
 
         </table>
     </div>
-    <div style="background:#f1f1f1; height:30px; width:100%; text-align:center; line-height:30px;border-top:1px #ccc solid;bottom:0; position: fixed;left: 0">
+    <div style="background: #f1f1f1; height: 30px; width: 100%; text-align: center; line-height: 30px; border-top: 1px #ccc solid; bottom: 0; position: fixed; left: 0">
         <strong>Copyright © 2017-2018 YeangEason.</strong>
         All rights
         reserved.
@@ -117,11 +127,45 @@
 </style>
 <script type="text/javascript">
 
+    //生成唯一的GUID
+    function getGuid() {
+        var s4 = function () {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        };
+        return s4() + s4() + s4() + "-" + s4();
+    }
+
+    function refreshCode() {
+        var oldSrc = $('#codeImg').attr('src');
+        var newSrc = oldSrc.split('?')[0] + '?' + getGuid();
+        $('#codeImg').attr('src', newSrc);
+    }
+
+    AddAntiForgeryToken = function (data) {
+        data.__RequestVerificationToken = $('input[name=__RequestVerificationToken]').val();
+        return data;
+    };
+
     $(function () {
-        $('#sign-in').click(function () {
-            //$('#Loading').css('display', 'block');
-            $('#Loading').show();
+
+        $('#signIn').click(function () {
+            var userName = $('#UserName').val();
+            var password = $('#Password').val();
+            var validateCode = $('#ValidateCode').val();
+
+            $.ajax({
+                type: 'Post',
+                url: '/Account/Login',
+                headers: headers,
+                cache: false,
+                data: AddAntiForgeryToken({ UserName: userName, Password: password, ValidateCode: validateCode }),
+                dataType: 'Json',
+                success: function (data) {
+                    //...
+                }
+            });
         });
+
     });
 
 </script>

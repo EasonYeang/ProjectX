@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using PX.Domain.DAC;
 using PX.IService.IBLL;
+using PX.Model.ViewModel;
+using PX.Utility.Tool;
 
 namespace ProjectX.Controllers
 {
@@ -36,6 +40,31 @@ namespace ProjectX.Controllers
             #endregion
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult Login(SysUserViewModel user)
+        {
+            if (user!=null)
+            {
+                
+            }
+            return Json('1');
+        }
+
+        /// <summary>
+        /// Get validate code
+        /// </summary>
+        /// <returns>Validate Code</returns>
+        public ActionResult GetValidateCode()
+        {
+            ValidateCode validateCode = new ValidateCode();
+            string vCode = validateCode.RandCode();
+            Session["ValidateCode"] = vCode;
+            byte[] bytes = validateCode.CreateImage(vCode);
+
+            return File(bytes, @"image/jpg");
         }
     }
 }

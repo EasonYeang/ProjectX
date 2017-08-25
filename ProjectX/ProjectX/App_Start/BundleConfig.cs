@@ -12,7 +12,8 @@ namespace ProjectX
             bundles.Add(new ScriptBundle("~/Content/js").Include(
                 "~/Scripts/jquery-3.1.1.js",
                 "~/layui/layui.js",
-                "~/layui/layui.all.js"
+                "~/layui/layui.all.js",
+                "~/Scripts/vue.js"
                 ));
 
             //bundle css files

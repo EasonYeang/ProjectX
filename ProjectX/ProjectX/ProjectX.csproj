@@ -263,6 +263,7 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\vue.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -306,6 +307,10 @@
     <ProjectReference Include="..\PX.Map\PX.Map.csproj">
       <Project>{5c56d53b-cb8c-469b-96fb-9928de668712}</Project>
       <Name>PX.Map</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PX.Model\PX.Model.csproj">
+      <Project>{1A0DE01E-00D1-499F-A8C1-65A628572DE2}</Project>
+      <Name>PX.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\PX.Repository\PX.Repository.csproj">
       <Project>{23433033-733f-46d3-8c81-dc58ecb63519}</Project>
